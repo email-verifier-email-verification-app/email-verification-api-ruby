@@ -1,0 +1,16 @@
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.evasrv.com/email_verification/")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["cache-control"] = 'no-cache'
+request["content-type"] = 'application/x-www-form-urlencoded'
+request.body = "email=test%40domain.com&user_API_token=ggd0143305f60a131dc5d458431e756e7d1b19ba&="
+
+response = http.request(request)
+puts response.read_body
